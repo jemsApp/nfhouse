@@ -18,10 +18,10 @@ class ss1 extends StatefulWidget {
   // String designCode;
   // String rate;
   // List clrList=[];
-  List data;
+  List? data;
   List<int>multySelectionIndex;
   bool rate;
-  ss1(this.data,this.multySelectionIndex,this.rate);
+  ss1(this.multySelectionIndex,this.rate);
 
   @override
   State<ss1> createState() => _ss1State();
@@ -52,14 +52,14 @@ class _ss1State extends State<ss1> {
      widget.multySelectionIndex.forEach((index) {
        loadPages(index, context);
        ss_c.add(ScreenshotController());
-       designCode.add(widget.data[index]['id']);
+       designCode.add(widget.data![index]['id']);
        if(widget.rate)
          {
-           designRate.add(widget.data[index]['nr'].toString());
+           designRate.add(widget.data![index]['nr'].toString());
          }
        else
          {
-           designRate.add(widget.data[index]['wr'].toString());
+           designRate.add(widget.data![index]['wr'].toString());
          }
      });
   }
@@ -67,8 +67,8 @@ class _ss1State extends State<ss1> {
   loadPages(int dataIndex,BuildContext context){
   double _w = MediaQuery.of(context).size.width;
   double _h = MediaQuery.of(context).size.height;
-  int l=(widget.data[dataIndex]['clr'] as List).length;
-  List clrList=widget.data[dataIndex]['clr'];
+  int l=(widget.data![dataIndex]['clr'] as List).length;
+  List clrList=widget.data![dataIndex]['clr'];
   if(l==1)
   {
       pagelenth+=1;
@@ -2964,28 +2964,7 @@ class _ss1State extends State<ss1> {
                       ),
                     );
                   },),
-                stat.ssPageIndex.value==pagelenth-1?
-                FloatingActionButton(
-                  onPressed: ()  async {
-                    final box = context.findRenderObject() as RenderBox?;
-                    stat.isCaptureLoding.value=true;
-                    Future.wait([
-                      capture(stat.ssPageIndex.value)
 
-                    ]).then((value) async {
-                      stat.isCaptureLoding.value=false;
-                      ShareResult sr = await Share.shareXFiles(
-                        xfiles,
-                        sharePositionOrigin: box!.localToGlobal(Offset.zero) & box
-                            .size,
-                      );
-
-                    });
-                    //        Future.wait([capture(stat.ssPageIndex.value)]).then((value) => stat.collagePage_c.jumpToPage(++stat.ssPageIndex.value));
-                  },
-                  child: Icon(Icons.send),
-                  backgroundColor: Colors.green.withOpacity(0.6),
-                ):
                 FloatingActionButton(
                   onPressed: ()  async {
                     log("message");

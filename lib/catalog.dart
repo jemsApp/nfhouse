@@ -648,7 +648,7 @@ class _catalogState extends State<catalog> {
                                   //     [
                                   //     'id'],
                                   //     rt));
-                                   Get.to(()=>ss1(data,mulltySelectedIndex,rate));
+                                   Get.to(()=>ss1(mulltySelectedIndex,rate));
                                 },
                                 style: ElevatedButton.styleFrom(
                                     primary:
