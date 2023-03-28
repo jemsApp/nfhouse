@@ -11,17 +11,18 @@ import 'package:share_plus/share_plus.dart';
 import 'package:screenshot/screenshot.dart';
 
 
+
 class ss1 extends StatefulWidget {
 
-  // int pagelenth=0;
+  // int stat.pagelenth.value=0;
   // int totalPhoto;
   // String designCode;
   // String rate;
   // List clrList=[];
-  List? data;
+  List data;
   List<int>multySelectionIndex;
   bool rate;
-  ss1(this.multySelectionIndex,this.rate);
+  ss1(this.data,this.multySelectionIndex,this.rate);
 
   @override
   State<ss1> createState() => _ss1State();
@@ -35,7 +36,7 @@ class _ss1State extends State<ss1> {
   String? img;
 
   List<XFile>xfiles=[];
-  int pagelenth=0;
+
   List<ScreenshotController> ss_c=[];
   List<String>designCode=[];
   List<String>designRate=[];
@@ -44,34 +45,38 @@ class _ss1State extends State<ss1> {
   void initState() {
     super.initState();
     _loadPhoto();
+    stat.ssPageIndex.value=0;
   }
-  _loadPhoto()async{
+  Future _loadPhoto()async{
     pages.clear();
     designRate.clear();
     designCode.clear();
+    print("photo loaded ===================${widget.multySelectionIndex.length}");
+    stat.pagelenth.value=0;
      widget.multySelectionIndex.forEach((index) {
        loadPages(index, context);
        ss_c.add(ScreenshotController());
-       designCode.add(widget.data![index]['id']);
+       designCode.add(widget.data[index]['id']);
        if(widget.rate)
          {
-           designRate.add(widget.data![index]['nr'].toString());
+           designRate.add(widget.data[index]['nr'].toString());
          }
        else
          {
-           designRate.add(widget.data![index]['wr'].toString());
+           designRate.add(widget.data[index]['wr'].toString());
          }
      });
+     widget.multySelectionIndex=[];
   }
 
-  loadPages(int dataIndex,BuildContext context){
-  double _w = MediaQuery.of(context).size.width;
-  double _h = MediaQuery.of(context).size.height;
-  int l=(widget.data![dataIndex]['clr'] as List).length;
-  List clrList=widget.data![dataIndex]['clr'];
+  loadPages(int dataIndex,BuildContext context1){
+  double _w = MediaQuery.of(context1).size.width;
+  double _h = MediaQuery.of(context1).size.height;
+  int l=(widget.data[dataIndex]['clr'] as List).length;
+  List clrList=widget.data[dataIndex]['clr'];
   if(l==1)
   {
-      pagelenth+=1;
+      stat.pagelenth.value=stat.pagelenth.value+1;
       pages.add(SizedBox(
         height: _h*0.63,
         child: Column(
@@ -105,7 +110,7 @@ class _ss1State extends State<ss1> {
  else if(l== 2)
   {
 
-      pagelenth+= 1;
+      stat.pagelenth.value=stat.pagelenth.value+ 1;
       pages.add(SizedBox(
         height: _h*0.44,
         child: Row(
@@ -181,7 +186,7 @@ class _ss1State extends State<ss1> {
     }//2
   else if(l== 3)
   {
-    pagelenth+= 1;
+    stat.pagelenth.value=stat.pagelenth.value + 1;
     pages.add(SizedBox(
       height: _h*0.6,
       child: Row(
@@ -292,7 +297,7 @@ class _ss1State extends State<ss1> {
   else if(l==4 )
   {
    // log("${clrList[0]['imgUrl']}");
-    pagelenth+=1 ;
+    stat.pagelenth.value=stat.pagelenth.value+1 ;
     pages.add(SizedBox(
       height: _h*0.68,
       child: Column(
@@ -436,7 +441,7 @@ class _ss1State extends State<ss1> {
   }//4
   else if(l==5)
   {
-    pagelenth+=2 ;
+    stat.pagelenth.value=stat.pagelenth.value+2 ;
     pages.addAll([
       SizedBox(
         height: _h*0.6,
@@ -621,7 +626,7 @@ class _ss1State extends State<ss1> {
   }//3 2
   else if(l==6 )
   {
-    pagelenth+=2 ;
+    stat.pagelenth.value=stat.pagelenth.value+2 ;
     pages.addAll([
       SizedBox(
         height: _h*0.6,
@@ -838,7 +843,7 @@ class _ss1State extends State<ss1> {
   }//3 3
   else if(l==7 )
   {
-    pagelenth+=2 ;
+    stat.pagelenth.value=stat.pagelenth.value+2 ;
     pages.addAll([
       SizedBox(
         height: _h*0.68,
@@ -1090,7 +1095,7 @@ class _ss1State extends State<ss1> {
   }//4 3
   else if(l==8 )
   {
-    pagelenth+=2;
+    stat.pagelenth.value=stat.pagelenth.value+2;
     pages.addAll([
       SizedBox(
         height: _h*0.68,
@@ -1376,7 +1381,7 @@ class _ss1State extends State<ss1> {
   }// 4 4
   else if(l==9 )
   {
-    pagelenth+=3 ;
+    stat.pagelenth.value=stat.pagelenth.value+3 ;
     pages.addAll([
       SizedBox(
         height: _h*0.68,
@@ -1701,7 +1706,7 @@ class _ss1State extends State<ss1> {
   }//4 3 2
   else if(l==10 )
   {
-    pagelenth+=3 ;
+    stat.pagelenth.value=stat.pagelenth.value+3 ;
     pages.addAll([
       SizedBox(
         height: _h*0.68,
@@ -2059,7 +2064,7 @@ class _ss1State extends State<ss1> {
   }//4 4 2
   else if(l==11 )
   {
-    pagelenth+=3 ;
+    stat.pagelenth.value=stat.pagelenth.value+3 ;
     pages.addAll([
       SizedBox(
         height: _h*0.68,
@@ -2451,7 +2456,7 @@ class _ss1State extends State<ss1> {
   }//4 4 3
   else if(l==12 )
   {
-    pagelenth+=3 ;
+    stat.pagelenth.value=stat.pagelenth.value+3 ;
     pages.addAll([
       SizedBox(
         height: _h*0.68,
@@ -2902,7 +2907,7 @@ class _ss1State extends State<ss1> {
 
     xfiles.clear();
 
-    log("pagelenth =$pagelenth");
+    log("stat.pagelenth.value =$stat.pagelenth.value");
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -2914,7 +2919,7 @@ class _ss1State extends State<ss1> {
                 PageView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   controller: stat.collagePage_c,
-                  itemCount: pagelenth,
+                  itemCount: stat.pagelenth.value,
                   onPageChanged: (ind){
                     stat.ssPageIndex.value=ind;
                   },
@@ -2964,18 +2969,43 @@ class _ss1State extends State<ss1> {
                       ),
                     );
                   },),
-
                 FloatingActionButton(
                   onPressed: ()  async {
-                    log("message");
-                    Future.wait([capture(stat.ssPageIndex.value)]).then((value) {
-                      stat.collagePage_c.jumpToPage(++stat.ssPageIndex.value);
-                    });
+                    stat.isCaptureLoding.value=true;
+                  for(int i=0;i<=stat.pagelenth.value;i++){
 
+                    await Future.delayed(Duration(seconds: 1));
+
+                    if(stat.ssPageIndex.value>=stat.pagelenth.value-1){
+                      final box = context.findRenderObject() as RenderBox?;
+                      stat.isCaptureLoding.value=true;
+                      await Future.wait([
+                        capture(stat.ssPageIndex.value)
+                      ]).then((value) async {
+
+                        stat.isCaptureLoding.value=false;
+                        ShareResult sr = await Share.shareXFiles(
+                          xfiles,
+                          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box
+                              .size,
+                        );
+                      });
+                    }
+                    else
+                    {
+                          log("message == ${stat.pagelenth.value}");
+                          await Future.wait([capture(stat.ssPageIndex.value)]).then((value) {
+                            stat.collagePage_c.jumpToPage(++stat.ssPageIndex.value);
+                          });
+
+                    }
+                  }
+                    //        Future.wait([capture(stat.ssPageIndex.value)]).then((value) => stat.collagePage_c.jumpToPage(++stat.ssPageIndex.value));
                   },
                   child: Icon(Icons.send),
                   backgroundColor: Colors.green.withOpacity(0.6),
                 ),
+
                 stat.isCaptureLoding.value?Center(child: CircularProgressIndicator(color: Colors.green,),):SizedBox()
               ],
             )
@@ -2987,7 +3017,7 @@ class _ss1State extends State<ss1> {
   }
 }
 class ss_stat extends GetxController{
-  RxInt pageLenth=0.obs;
+  RxInt pagelenth=0.obs;
   RxInt ssPageIndex=0.obs;
   PageController collagePage_c=PageController();
   RxBool isCaptureLoding=false.obs;

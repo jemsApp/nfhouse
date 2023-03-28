@@ -33,6 +33,7 @@ class _catalogState extends State<catalog> {
     super.initState();
     suggetion.clear();
     updateData();
+    mulltySelectedIndex.clear();
   }
 
   updateData() async {
@@ -648,7 +649,9 @@ class _catalogState extends State<catalog> {
                                   //     [
                                   //     'id'],
                                   //     rt));
-                                   Get.to(()=>ss1(mulltySelectedIndex,rate));
+                                      List<int> tempList=mulltySelectedIndex;
+                                      mulltySelectedIndex=[];
+                                   Get.to(()=>ss1(data,tempList,rate));
                                 },
                                 style: ElevatedButton.styleFrom(
                                     primary:
