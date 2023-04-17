@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -2889,14 +2890,20 @@ class _ss1State extends State<ss1> {
     }
 
     if (isGranted) {
+
+      String fileName = DateTime.now().microsecondsSinceEpoch.toString()+".jpg";
       String directory = (await getExternalStorageDirectory())!.path;
 
-        String fileName = DateTime.now().microsecondsSinceEpoch.toString()+".JPEG";
      String? imge = await ss_c[pageIndex].captureAndSave(directory,fileName: fileName);
-      xfiles.add(XFile(imge!));
+      File? compreshedSS= await FlutterImageCompress.compressAndGetFile(
+        imge!, directory+"${DateTime.now().microsecondsSinceEpoch.toString()+".jpg"}",
+        quality: 100,
+      );
+      xfiles.add(XFile(compreshedSS!.path));
       log("ss stored = ${xfiles[pageIndex]}]");
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
